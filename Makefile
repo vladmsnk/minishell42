@@ -1,23 +1,21 @@
 NAME =	minishell
 
 CC =	gcc
-CFLAGS =	-g -Wall -Wextra -Werror -MMD
+CFLAGS = -g -Wall -Wextra -Werror -MMD
 
 RM =	rm -rf
 
 SRC =   main.c	\
+		ft_qsplit.c
 
 
-INC = 	-I libft/libft.h 	\
-		-I includes/headers.h         \
-		-I includes/structs.h	\
-		# -I /Users/${USER}/.brew/opt/readline/include \
+INC = 	-I libft	\
+		-I includes 
 
 OBJS =	$(SRC:.c=.o)
 DEP =	$(SRC:.c=.d)
 
-LD_FLAGS =	-L libft \
-			# -L /Users/${USER}/.brew/opt/readline/lib \
+LD_FLAGS =	-L libft
 
 .PHONY :	all clean re fclean
 

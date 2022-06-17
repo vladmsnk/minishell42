@@ -8,6 +8,6 @@
 # include <../libft/libft.h>
 
 
-// char	**ft_split_by_spaces(char *input_str);
+char    **ft_qsplit(const char *input_str, char c);
 
 #endif

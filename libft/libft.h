@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jjhezane <jjhezane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vlad <vlad@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 19:09:32 by jjhezane          #+#    #+#             */
-/*   Updated: 2021/10/18 19:09:33 by jjhezane         ###   ########.fr       */
+/*   Updated: 2022/05/23 14:28:40 by vlad             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,7 @@
 # define LIBFT_H
 # include <unistd.h>
 # include <stdlib.h>
-
-typedef struct s_list
-{
-	void			*content;
-	struct s_list	*next;
-}	t_list;
+# include "../includes/structs.h"
 
 size_t	ft_strlen(const char *s);
 int		ft_isalpha(int c);

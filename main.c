@@ -1,19 +1,18 @@
 #include "includes/headers.h"
 #include "includes/structs.h"
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv, char **envp)
+{	
+	t_info 	info;
 	char	*str;
-	int		flag;
-
-	flag = 0;
-	while (1)
+	while (!info.exit_t)
 	{
-		str = readline("Shell: ");
-		printf("%s\n", str);
-		free(str);
+			str = readline("Shell: ");
+	// char **st = ft_qsplit(str, ' '); 	
 	}
-	printf("%p\n", argv);
+
+	
 	printf("%d\n", argc);
+	printf("%p", argv);
 	return (0);
 }
