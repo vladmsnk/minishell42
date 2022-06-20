@@ -1,21 +1,29 @@
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
-typedef struct s_list
+# define SPACE 0
+# define WORD 1
+# define FIELD 2
+# define EXPFIELD 3
+# define REDOUT 4
+# define REDIN 5
+# define REDAPP 6
+# define HERED 7 // >>
+# define PIPE 8 // <<
+
+
+typedef struct s_token
 {
 	void			*content;
-	struct s_list	*next;
+	t_token			*next;
     int             group;
-}	t_list;
+}	t_token;
 
 typedef struct s_info
 {	
-	t_builtin_ptr builtins[7];
 	char		**envp;
 	int			exit_t;
 }	t_info;
-
-typedef int(* t_builtin_ptr)(t_list *, t_info *);
 
 
 #endif
