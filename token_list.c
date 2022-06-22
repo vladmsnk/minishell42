@@ -34,6 +34,6 @@ void add_tkn_back(t_token **tkn_list, t_token *new_tkn)
 	else
 	{
 		head = tkn_list;
-		get_last_tkn(tkn_list)->next = new_tkn;
+		get_last_tkn(*head)->next = new_tkn;
 	}
 }

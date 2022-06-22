@@ -16,6 +16,12 @@
 # include <stdlib.h>
 # include "../includes/structs.h"
 
+typedef struct s_list
+{
+	void			*content;
+	struct s_list	*next;
+}	t_list;
+
 size_t	ft_strlen(const char *s);
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);

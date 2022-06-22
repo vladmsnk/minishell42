@@ -1,13 +1,13 @@
 NAME =	minishell
 
 CC =	gcc
-CFLAGS = -g -Wall -Wextra -Werror -MMD
+CFLAGS = -g  -MMD
 
 RM =	rm -rf
 
-SRC =   main.c	\
-		ft_qsplit.c
-
+SRC =   main.c \
+		lexical_anylizer.c	\
+		token_list.c 
 
 INC = 	-I libft	\
 		-I includes 

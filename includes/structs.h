@@ -14,8 +14,8 @@
 
 typedef struct s_token
 {
-	void			*content;
-	t_token			*next;
+	char			*content;
+	struct s_token	*next;
     int             group;
 }	t_token;
 

@@ -1,17 +1,44 @@
 #include "includes/headers.h"
 #include "includes/structs.h"
 
-int main(int argc, char **argv)
+int main(int __unused argc, char __unused **argv)
 {	
-	t_info 	info;
-	char	*str;
-	
-	while (!info.exit_t)
+	// t_info 	info;
+	t_token	*tokens;
+	int		repeat;
+	char	*cmd;
+
+
+	while (1)
 	{
-		str = readline("Shell: ");
-		
+		repeat = 1;
+		while (repeat)
+		{
+			repeat = 0;
+			cmd = readline("Shell: ");
+			if (!cmd)
+				repeat = 1;
+		}
+		tokens = get_lexems(cmd);
+		t_token *tmp;
+		tmp = tokens;
+		while (tmp)
+		{
+			printf("%s\n", tmp->content);
+			tmp = tmp->next;
+		}
+		/*
+		split cmd into lexems
+		put them into likend list - list of tokens
+		each node of the list contains corresponding lexem and it group id
+		*/
+		// tokens = get_tkn_list_from_cmd(cmd);
+		// while (tokens)
+		// {
+		// 	printf("%s\n", tokens->content);
+		// 	tokens = tokens->next;
+		// }
+
 	}	
-	printf("%d\n", argc);
-	printf("%p", argv);
 	return (0);
 }

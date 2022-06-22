@@ -10,121 +10,48 @@ int	is_space(char c)
 	return (0);
 }
 
-int	is_word(const char *lex, int l, int r)
+t_token *get_lexems(const char *cmd)
 {
-	if (ft_isalnum(lex[l])
-		&& ft_isalnum(lex[r])
-		&& is_space(lex[r + 1]))
-		return (WORD);
-	return (0);
-}
-
-int is_exp_field(const char *lex, int l, int r)
-{
-	if (lex[l] == '\"'
-		&& lex[l] == lex[r]
-		&& is_space(lex[r + 1]))
-		return (EXPFIELD);
-	return (0);
-}
-
-int	is_field(const char *lex, int l, int r)
-{
-	if (lex[l] == '\''
-		&& lex[l] == lex[r]
-		&& is_space(lex[r + 1]))
-		return (FIELD);
-	return (0);
-}
-
-int is_redirect_in(char *lex, int l, int r)
-{
-	if (!ft_strncmp(lex, "<", r - l + 1)
-		&& is_space(lex[r + 1]))
-		return (REDIN);
-	return (0);
-}
-
-int is_redirect_out(char *lex, int l, int r)
-{
-	if (!ft_strncmp(lex, ">", r - l + 1)
-		&& is_space(lex[r + 1]))
-		return (REDOUT);
-	return (0);
-}
-
-int is_here_doc(char *lex, int l, int r)
-{
-	if (!ft_strncmp(lex, "<<", r - l + 1)
-		&& is_space(lex[r + 1]))
-		return (HERED);
-	return (0);
-}
-
-int is_redirect_app(char *lex, int l, int r)
-{
-	if (!ft_strncmp(lex, ">>", r - l + 1)
-		&& is_space(lex[r + 1]))
-		return (REDAPP);
-	return (0);
-}
-
-int	is_pipe(char *lex, int l, int r)
-{
-	if (!ft_strncmp(lex, "|", r - l + 1)
-	&& is_space(lex[r + 1]))
-		return (1);
-	return (0);
-}
-
-int is_valid(char *cmd, int l, int r)
-{
-	return (is_exp_field(cmd, l, r)
-		+ is_field(cmd, l, r)
-		+ is_word(cmd, l, r)
-		+ is_pipe(cmd, l, r)
-		+ is_redirect_in(cmd, l, r)
-		+ is_redirect_out(cmd, l, r)
-		+ is_redirect_app(cmd, l, r)
-		+ is_here_doc(cmd, l, r));
-}
-
-t_token	*retrieve_tkn(char *cmd, int l, int r)
-{
+    int	lhs;
+	int rhs;
+	int	group;
 	char	*content;
-	int		group;
+	t_token *lst;
+	t_token	*tmp;
 
-	group = is_valid(cmd, l, r);
-	if (group)
+	lhs = 0;
+	group = 0;
+	lst = NULL;
+	rhs = 0;
+	while (cmd[rhs] != '\0')
 	{
-		content = ft_substr(cmd, l, r - l + 1);
-		return (init_tkn_list(content, group));
-	}
-	return (NULL);
-}
-
-t_token *get_tkn_list_from_cmd(char *cmd)
-{
-	t_token	*tkn_list;
-	t_token *tkn;
-	int		r;
-	int		l;
-
-	if (cmd)
-	{
-		r = 0;
-		l = 0;
-		while (cmd[r] != '\0')
+		if (!group)
 		{
-			tkn = retrieve_tkn(cmd, l, r);
-			if (tkn)
-			{
-				add_tkn_back(&tkn_list, tkn);
-				l = r + 1;
-			}
-			r++;
+			if (cmd[rhs] == '\"')
+				group = 1;
+			else if (cmd[rhs] == '\'')
+				group = 2;
+			else if (ft_strchr(">|<", cmd[rhs]))
+				group = 3;
+			else if (ft_isalnum(cmd[rhs]))
+				group = 4;
+			else if (!is_space(cmd[rhs]))
+				group = 5;
+			lhs = rhs;
 		}
-		return (tkn_list);
+		if (((group == 1 && cmd[rhs] == '\"') 
+		|| (group == 2 && cmd[rhs] == '\'')
+		|| (group == 3 && ft_strchr(">|<", cmd[rhs]))
+		|| (group == 4 && ft_isalnum(cmd[rhs]))
+		|| (group == 5 && !is_space(cmd[rhs])))
+			&& (is_space(cmd[rhs + 1]) || cmd[rhs + 1] == '\0'))
+		{
+			content = ft_substr(cmd, lhs, rhs - lhs + 1);
+			tmp = init_tkn_list(content, group);
+			add_tkn_back(&lst, tmp);
+			group = 0;
+		}
+		rhs++;
 	}
-	return (NULL);
+	return (lst);
 }
